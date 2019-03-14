@@ -45,49 +45,39 @@ int main() {
            "1 croiseur (4 cases)\n"
            "1 contre torpilleur (3 cases)\n"
            "1 torpilleur (2 cases)");
-    "vous devez a present tirer sur la grile adverse et tener de toucher les bateaux adverses";
+    "vous devez a present tirer sur la grile adverse et tenter de toucher les bateaux adverses";
     "le premier joueur a perdre tous les batesu perd la partie";
 
 
     SetConsoleOutputCP(65001); // For accented characters
-    printf("Une grille basée sur les lignes simples:\n");
+    printf("Une grille basée sur les lignes simples:\n\n\n");
     SetConsoleOutputCP(437); // For semi-graphic characters
-    printf("%c", STLC);
+    printf("    A B C D E F G H I J \n");
+    printf("   %c", STLC);             //┌
     for (int row = 0; row < 9; row++) {
-        printf("%c%c", SHSB, SHTB);
+        printf("%c%c", SHSB, SHTB);         //9x ─┬
     }
+    printf("%c%c\n   ",SHSB,STRC);                 // ─┐
     for (int row = 0; row < 9; row++) {
-        printf("%c%c\n", SHSB, SVRB);
+
         for (int row = 0; row < 11; row++) {
-            printf("%c ", SVSB);
+            printf("%c ", SVSB);            //11x espace │
         }
-        printf("\n%c", SVLB);
+        printf("\n   %c", SVLB);           //\n├
         for (int row = 0; row < 9; row++) {
-            printf("%c%c", SHSB, SC);
+            printf("%c%c", SHSB, SC);       //9x ─┼
         }
+        printf("%c%c\n   ",SHSB,SVRB);     //─┤
     }
-    printf("%c%c\n",SHSB , SBRC);
+
     for (int row = 0; row < 11; row++) {
-        printf("%c ", SVSB);
+        printf("%c ", SVSB);                //dernier suite de │
     }
-    printf("\n%c", SBLC);
+    printf("\n   %c", SBLC);                    //\n puis └
     for (int row = 0; row < 9; row++) {
-        printf("%c%c", SHSB, SHBB);
+        printf("%c%c", SHSB, SHBB);         //─┴
     }
-    printf("%c%c",SHSB, SBRC);
+    printf("%c%c",SHSB, SBRC);              //─┘
 
 
-//      printf("%c   %c   %c\n", SVSB, SVSB, SVSB);
-//      printf("%c%c%c%c%c%c%c%c%c\n", SBLC, SHSB, SHSB, SHSB, SHBB, SHSB, SHSB, SHSB, SBRC);
-
-//      SetConsoleOutputCP(65001); // For accented characters
-//      printf("\n\nUne grille basée sur les lignes doubles:\n");
-//      SetConsoleOutputCP(437); // For semi-graphic characters
-//      printf("%c%c%c%c%c%c%c%c%c\n", DTLC, DHSB, DHSB, DHSB, DHTB, DHSB, DHSB, DHSB, DTRC);
-//      printf("%c   %c   %c\n", DVSB, DVSB, DVSB);
-//      printf("%c%c%c%c%c%c%c%c%c\n", DVLB, DHSB, DHSB, DHSB, DC, DHSB, DHSB, DHSB, DVRB);
-//      printf("%c   %c   %c\n", DVSB, DVSB, DVSB);
-//      printf("%c%c%c%c%c%c%c%c%c\n", DBLC, DHSB, DHSB, DHSB, DHBB, DHSB, DHSB, DHSB, DBRC);
-
-//
 }
