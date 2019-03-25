@@ -14,53 +14,66 @@
 #define SHBB 193 // ┴, Single Horizontal Bottom Border
 #define SHTB 194 // ┬, Single Horizontal Top Border
 #define SC   197 // ┼, Single Center
-#define DTLC 201 // ╔, Double Top Left Corner
-#define DTRC 187 // ╗, Double Top Right Corner
-#define DBLC 200 // ╚, Double Bottom Left Corner
-#define DBRC 188 // ╝, Double Bottom Right Corner
-#define DVSB 186 // ║, Double Vertical Simple Border
-#define DVRB 185 // ╣, Double Vertical Right Border
-#define DVLB 204 // ╠, Double Vertical Left Border
-#define DHSB 205 // ═, Double Horizontal Simple Border
-#define DHBB 202 // ╩, Double Horizontal Bottom Border
-#define DHTB 203 // ╦, Double Horizontal Top Border
-#define DC   206 // ╬, Double Center
+#define CUBE 219
 
+
+int grille[10][10] = {{13, 0,  0,  0, 0,  0, 0,  0, 0, 0},
+                      {3,  0,  0,  1, 0,  0, 9,  0, 0, 0},
+                      {3,  0,  0,  0, 0,  0, 0,  0, 0, 0},
+                      {0,  22, 22, 0, 0,  0, 0,  0, 0, 0},
+                      {0,  0,  0,  0, 1,  0, 0,  0, 0, 0},
+                      {0,  0,  0,  0, -1, 0, 0,  0, 0, 0},
+                      {0,  0,  0,  0, -1, 0, -1, 0, 0, 0},
+                      {0,  0,  0,  0, -1, 0, 0,  0, 0, 0},
+                      {0,  0,  0,  0, -1, 0, 0,  0, 0, 0},
+                      {0,  0,  0,  0, 0,  0, 0,  0, 0, 0}};
 
 //Bataille navale
 //Pedro Pinto
 //07.03.2019
 void topborder(int top) {
-    printf("    A B C D E F G H I J K\n");
+    printf("     A   B   C   D   E   F   G   H   I   J     \n");
     printf("   %c", STLC);             //┌
-    for (int row = 0; row < top; row++) {
-        printf("%c%c", SHSB, SHTB);         //9x ─┬
+    for (int row = 0; row < top - 1; row++) {
+        printf("%c%c%c%c", SHSB, SHSB, SHSB, SHTB);         //9x ─┬
     }
-    printf("%c%c\n", SHSB, STRC);// ─┐
+    printf("%c%c%c%c\n", SHSB, SHSB, SHSB, STRC);// ─┐
 }
 
 void horizontalborder(int horizon) {
     printf("   %c", SVLB);           //\n├
-    for (int row = 0; row < horizon; row++) {
-        printf("%c%c", SHSB, SC);       //9x ─┼
+    for (int row = 0; row < horizon - 1; row++) {
+        printf("%c%c%c%c", SHSB, SHSB, SHSB, SC);       //9x ─┼
     }
-    printf("%c%c\n", SHSB, SVRB);     //─┤
+    printf("%c%c%c%c\n", SHSB, SHSB, SHSB, SVRB);     //─┤
 }
 
 void botborder(int bot) {
     printf("   %c", SBLC);                    //\n puis └
-    for (int row = 0; row < bot; row++) {
-        printf("%c%c", SHSB, SHBB);         //─┴
+    for (int row = 0; row < bot - 1; row++) {
+        printf("%c%c%c%c", SHSB, SHSB, SHSB, SHBB);         //─┴
     }
-    printf("%c%c\n", SHSB, SBRC);              //─┘
+    printf("%c%c%c%c\n", SHSB, SHSB, SHSB, SBRC);              //─┘
 }
 
-void Verticalborder(int vertical) {
-    printf("   %c", SVSB);                    //\n puis └
+void Verticalborder(int vertical, int num) {
+
+    printf("%2d %c", num, SVSB);                    //\n puis └
     for (int row = 0; row < vertical; row++) {
-        printf(" %c", SVSB);         //─┴
+
+        char carAFF = ' ';
+        if (grille[num - 1][row] > 10) {
+            carAFF = 'X';
+        }
+        if (grille[num - 1][row] > 20) {
+            carAFF = CUBE;
+        }
+        if (grille[num - 1][row] == -1) {
+            carAFF = 'O';
+        }
+        printf(" %c %c", carAFF, SVSB);         //─┴
     }
-    printf(" %c\n", SVSB);              //─┘
+    printf("\n");              //─┘
 }
 
 int main() {
@@ -69,15 +82,14 @@ int main() {
     int horizon;
     int bot;
     int jouer;
-
-    printf(" .  o ..\n"
-           " o . o o.o\n"
-           "      ...oo\n"
-           "        __[]__\n"
-           "     __|_o_o_o\\__\n"
-           "     \\\"\"\"\"\"\"\"\"\"\"/\n"
-           "      \\. ..  . /\n"
-           " ^^^^^^^^^^^^^^^^^^^^");                    // ASCII art bateau
+    char tir = 5;
+    printf(
+            "\n"
+            "        __[]__\n"
+            "     __|_o_o_o\\__\n"
+            "     \\\"\"\"\"\"\"\"\"\"\"/\n"
+            "      \\. ..  . /\n"
+            " ^^^^^^^^^^^^^^^^^^^^");                    // ASCII art bateau
     printf("\nVoici le jeu de la Bataille navale\n\n\n ");      //introduction
 
 
@@ -87,7 +99,7 @@ int main() {
     printf("Tappez 1 pour lancer votre partie\n");
     printf("Tappez 2 afficher les regles et apprendre a jouer\n");
     printf("Tappez 0 pour quiter le jeu\n");
-    scanf("%d",&jouer);
+    scanf("%d", &jouer);
     switch (jouer) {
         case 1:
             printf("Voila votre grille choisicez votre cible\n");
@@ -98,7 +110,7 @@ int main() {
                     horizontalborder(SIZE);
 
                 }
-                Verticalborder(SIZE);
+                Verticalborder(SIZE, row + 1);
             }
             botborder(SIZE);
             break;
@@ -118,10 +130,13 @@ int main() {
     }
 
     SetConsoleOutputCP(65001); // For accented characters
-    printf("Une grille basée sur les lignes simples:\n\n\n");
+    printf("\n\n\n");
     SetConsoleOutputCP(437); // For semi-graphic characters
+    printf("Vos bateaux sont prets faite feu ! ! !");
+    printf("donnez-moi vos coordonnees");
+    scanf("%d", &tir);
+int hit[5]={0,0,0,0,0};
 
-
-
-
+int col=-48;
+int row=-88;
 }
