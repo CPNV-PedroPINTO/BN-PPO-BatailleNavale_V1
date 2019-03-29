@@ -7,8 +7,8 @@
 ### 6.2 Fonctionnalités minimales
 #### Le	type	d’application	C	demandé	doit	offrir	les	fonctionnalités	minimales	suivantes	:
 #### Version	0.1:
-2. • Jouer	 à	 la	 bataille	 navale	 alors	 que	 la	 position	 des	 bateaux	 est	 Prédefini au début de la partie
-2. • Afficher	l’aide	du	jeu + lien pour une video explicative
+ • Jouer	 à	 la	 bataille	 navale	 alors	 que	 la	 position	 des	 bateaux	 est	 Prédefini au début de la partie
+ • Afficher	l’aide	du	jeu + lien pour une video explicative
 #### Version 0.2:
-3. • Proposer plusieurs grilles sur les quelles jouer
-3. l'ordinateur tir égalment et on peux perdre la partie
+ • Proposer plusieurs grilles sur les quelles jouer
+ •l'ordinateur tir égalment et on peux perdre la partie
