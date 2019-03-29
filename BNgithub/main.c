@@ -16,21 +16,19 @@
 #define SC   197 // ┼, Single Center
 #define CUBE 219
 
+int hit[5] = {0, 0, 0, 0, 0};
+int grille[10][10] = {{3, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {3, 0, 0, 0, 5, 5, 5, 5, 5, 0},
+                      {3, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 2, 2, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-int grille[10][10] = {{13, 0,  0,  0, 0,  0, 0,  0, 0, 0},
-                      {3,  0,  0,  1, 0,  0, 9,  0, 0, 0},
-                      {3,  0,  0,  0, 0,  0, 0,  0, 0, 0},
-                      {0,  22, 22, 0, 0,  0, 0,  0, 0, 0},
-                      {0,  0,  0,  0, 1,  0, 0,  0, 0, 0},
-                      {0,  0,  0,  0, -1, 0, 0,  0, 0, 0},
-                      {0,  0,  0,  0, -1, 0, -1, 0, 0, 0},
-                      {0,  0,  0,  0, -1, 0, 0,  0, 0, 0},
-                      {0,  0,  0,  0, -1, 0, 0,  0, 0, 0},
-                      {0,  0,  0,  0, 0,  0, 0,  0, 0, 0}};
 
-//Bataille navale
-//Pedro Pinto
-//07.03.2019
 void topborder(int top) {
     printf("     A   B   C   D   E   F   G   H   I   J     \n");
     printf("   %c", STLC);             //┌
@@ -76,13 +74,59 @@ void Verticalborder(int vertical, int num) {
     printf("\n");              //─┘
 }
 
+void Playgame() {
+    int test = 0;
+    while (test != 1) {
+        //Afficher la grille
+        printf("Voila votre grille choisicez votre cible\n");
+        topborder(SIZE);
+        for (int row = 0; row < SIZE; row++) {          //Grille
+            if (row > 0)//first line
+            {
+                horizontalborder(SIZE);
+
+            }
+            Verticalborder(SIZE, row + 1);
+
+        }
+        botborder(SIZE);
+        //Demander le coordonées de tir
+        char tir[5];
+        printf("Vos bateaux sont prets faite feu ! ! !\n");
+        printf("donnez-moi vos coordonnees : ");
+        scanf("%s", &tir);
+        int col = tir[0] - 65;
+        int row = tir[1] - 49;
+        int valcase = grille[row][col];
+
+        if (valcase == 0) {
+            printf("\nA l'eau\n");
+            grille[row][col] = -1;
+        }
+        if (valcase >= 2) {
+            printf("\ntouche\n");
+            hit[valcase]++;
+            grille[row][col] += 10;
+        }
+        for (int n = 1; n <= 5; ++n) {
+            printf("%d \n", hit[n]);
+        }
+        //Appliquer le tir sur le model
+        hit[valcase]++;
+    }
+}
+
+//Bataille naval}
+//Pedro Pinto
+//07.03.2019
+
 int main() {
     int top;
     int vertical;
     int horizon;
     int bot;
     int jouer;
-    char tir = 5;
+
     printf(
             "\n"
             "        __[]__\n"
@@ -102,27 +146,18 @@ int main() {
     scanf("%d", &jouer);
     switch (jouer) {
         case 1:
-            printf("Voila votre grille choisicez votre cible\n");
-            topborder(SIZE);
-            for (int row = 0; row < SIZE; row++) {          //Grille
-                if (row > 0)//first line
-                {
-                    horizontalborder(SIZE);
-
-                }
-                Verticalborder(SIZE, row + 1);
-            }
-            botborder(SIZE);
+            Playgame();
             break;
         case 2:
             printf("\nRegle de la Bataille navale\n"                    //REGLERS !!
-                   "On vous proposera une grille de jeu numerotee de 1 a 10 horizontalement et\nde A a J verticalement avec les bateaux suivants deja place.\n"
+                   "On vous proposera une grille de jeu numerotee de 1 a 10 horizontalement et\nde A a J verticalement avec les bateaux suivants deja places.\n"
                    "1 croiseur (4 cases)\n"
-                   "1 contre torpilleur (3 cases)\n"
+                   "1 contre-torpilleur (3 cases)\n"
                    "1 torpilleur (2 cases)\n");
-            printf("vous devez a present tirer sur la grile adverse et tenter de toucher ces bateaux");
-            printf("le premier joueur a elliminer tous les bateaux advers gagne le combat");
-            printf("Tous a vos postes COMBAT!!\n\n");
+            printf("Vous devez a present tirer sur la grille adverse et tenter de toucher les bateaux");
+            printf("Le premier joueur a eliminer tout les bateaux adverses gagne le combat");
+            printf("Voici une video explicative : https://www.youtube.com/watch?v=klO6vPWPkzE\n");
+            printf("Tous a vos postes de COMBAT!!\n\n");
             break;
         default:                                                        //Fin/quiter
             printf("Vous avez quiter ou mis un chiffre invalide\n");
@@ -132,11 +167,8 @@ int main() {
     SetConsoleOutputCP(65001); // For accented characters
     printf("\n\n\n");
     SetConsoleOutputCP(437); // For semi-graphic characters
-    printf("Vos bateaux sont prets faite feu ! ! !");
-    printf("donnez-moi vos coordonnees");
-    scanf("%d", &tir);
-int hit[5]={0,0,0,0,0};
 
-int col=-48;
-int row=-88;
+
+
+    system("pause");
 }
