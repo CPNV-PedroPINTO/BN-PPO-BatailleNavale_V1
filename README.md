@@ -15,4 +15,3 @@ Dans les repository on accès a tous les release on clique sur les release et sa
 3. • Proposer plusieurs grilles sur les quelles jouer.
 3. • L'ordinateur tir égalment et on peux perdre la partie.
 
-`BNgithub.exe`
