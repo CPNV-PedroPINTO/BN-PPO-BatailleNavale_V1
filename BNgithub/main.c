@@ -17,7 +17,7 @@
 #define CUBE 219
 
 int hit[5] = {0, 0, 0, 0, 0};
-int grille[10][10] = {{3, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+int grille[10][10] = {{3, 0, 0, 0, 0, 0, 0, 0, 0, 0},                   //Model
                       {3, 0, 0, 0, 5, 5, 5, 5, 5, 0},
                       {3, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                       {0, 2, 2, 0, 0, 0, 0, 0, 0, 0},
@@ -109,10 +109,31 @@ void Playgame() {
             grille[row][col] += 10;
         }
         for (int n = 1; n <= 5; ++n) {
-            printf("%d \n", hit[n]);
         }
-        //Appliquer le tir sur le model
-        hit[valcase]++;
+        //Appliquer le tir sur le model Bateau 2
+        int x = 0;
+        int y = 0;
+        int compteur = 0;
+        for (int bateau = 1; bateau <= 5; bateau++) {
+            for (x = 0; x < SIZE; x++) {
+                for (y = 0; y < SIZE; y++) {
+                    if (grille[x][y] == bateau + 10) {
+                        compteur++;
+                    }
+                }
+            }
+            printf("%d\n", compteur);
+            if (compteur == bateau) {                //le bateau est coulé
+                printf("Coule ! ! !\n");
+                for (x = 0; x < SIZE; x++) {
+                    for (y = 0; y < SIZE; y++) {
+                        if (grille[x][y] == bateau + 10) {
+                            grille[x][y] = bateau + 20;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
