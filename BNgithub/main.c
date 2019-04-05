@@ -1,3 +1,6 @@
+//Bataille naval}
+//Pedro Pinto
+//07.03.2019
 
 #include <stdio.h>
 #include <windows.h>
@@ -110,6 +113,7 @@ void Playgame() {
         }
         for (int n = 1; n <= 5; ++n) {
         }
+        
         //Appliquer le tir sur le model Bateau 2
         int x = 0;
         int y = 0;
@@ -137,9 +141,7 @@ void Playgame() {
     }
 }
 
-//Bataille naval}
-//Pedro Pinto
-//07.03.2019
+
 
 int main() {
     int top;
