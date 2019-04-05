@@ -20,16 +20,16 @@
 #define CUBE 219
 
 int hit[5] = {0, 0, 0, 0, 0};
-int grille[10][10] = {{3, 0, 0, 0, 0, 0, 0, 0, 0, 0},                   //Model
-                      {3, 0, 0, 0, 5, 5, 5, 5, 5, 0},
-                      {3, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                      {0, 2, 2, 0, 0, 0, 0, 0, 0, 0},
-                      {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
-                      {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
-                      {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
-                      {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
-                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+int grille[SIZE][SIZE] = {{3, 0, 0, 0, 0, 0, 0, 0, 0, 0},                   //Model
+                          {3, 0, 0, 0, 5, 5, 5, 5, 5, 0},
+                          {3, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                          {0, 2, 2, 0, 0, 0, 0, 0, 0, 0},
+                          {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+                          {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+                          {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+                          {0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
 
 void topborder(int top) {
@@ -63,13 +63,13 @@ void Verticalborder(int vertical, int num) {
     for (int row = 0; row < vertical; row++) {
 
         char carAFF = ' ';
-        if (grille[num - 1][row] > 10) {
+        if (grille[num][row] > 10) {
             carAFF = 'X';
         }
-        if (grille[num - 1][row] > 20) {
+        if (grille[num][row] > 20) {
             carAFF = CUBE;
         }
-        if (grille[num - 1][row] == -1) {
+        if (grille[num][row] == -1) {
             carAFF = 'O';
         }
         printf(" %c %c", carAFF, SVSB);         //─┴
@@ -77,62 +77,81 @@ void Verticalborder(int vertical, int num) {
     printf("\n");              //─┘
 }
 
+void Gameover() {
+    int x;
+    int y;
+
+    for (x = 0; x < SIZE; x++) {
+        for (y = 0; y < SIZE; y++) {
+        }
+    }
+}
+
 void Playgame() {
+    int bateaux_coules = 0;
     int test = 0;
     while (test != 1) {
         //Afficher la grille
-        printf("Voila votre grille choisicez votre cible\n");
-        topborder(SIZE);
-        for (int row = 0; row < SIZE; row++) {          //Grille
-            if (row > 0)//first line
-            {
-                horizontalborder(SIZE);
+        while (bateaux_coules != 4) {
+            printf("Voila votre grille choisicez votre cible\n");
+            topborder(SIZE);
+            for (int row = 0; row < SIZE; row++) {          //Grille
+                if (row > 0)//first line
+                {
+                    horizontalborder(SIZE);
 
-            }
-            Verticalborder(SIZE, row + 1);
-
-        }
-        botborder(SIZE);
-        //Demander le coordonées de tir
-        char tir[5];
-        printf("Vos bateaux sont prets faite feu ! ! !\n");
-        printf("donnez-moi vos coordonnees : ");
-        scanf("%s", &tir);
-        int col = tir[0] - 65;
-        int row = tir[1] - 49;
-        int valcase = grille[row][col];
-
-        if (valcase == 0) {
-            printf("\nA l'eau\n");
-            grille[row][col] = -1;
-        }
-        if (valcase >= 2) {
-            printf("\ntouche\n");
-            hit[valcase]++;
-            grille[row][col] += 10;
-        }
-        for (int n = 1; n <= 5; ++n) {
-        }
-        
-        //Appliquer le tir sur le model Bateau 2
-        int x = 0;
-        int y = 0;
-        int compteur = 0;
-        for (int bateau = 1; bateau <= 5; bateau++) {
-            for (x = 0; x < SIZE; x++) {
-                for (y = 0; y < SIZE; y++) {
-                    if (grille[x][y] == bateau + 10) {
-                        compteur++;
-                    }
                 }
+                Verticalborder(SIZE, row);
+
             }
-            printf("%d\n", compteur);
-            if (compteur == bateau) {                //le bateau est coulé
-                printf("Coule ! ! !\n");
+
+            botborder(SIZE);
+            //Demander le coordonées de tir
+            char tir[5];
+
+
+            printf("Vos bateaux sont prets faite feu ! ! ! \n donnez-moi vos coordonnees : ");
+            scanf("%s", &tir);
+            int col = tir[0] - 65;
+            int row = tir[1] - 48;
+            int valcase = grille[row][col];
+
+            if (valcase == 0) {
+                printf("\nA l'eau\n");
+                grille[row][col] = -1;
+            }
+            if (valcase >= 2) {
+                printf("\ntouche\n");
+                hit[valcase]++;
+                grille[row][col] += 10;
+            }
+            for (int n = 1; n <= 5; ++n) {
+            }
+
+            //Appliquer le tir sur le model
+            int x = 0;
+            int y = 0;
+            int compteur = 0;
+            for (int bateau = 1; bateau <= 5; bateau++) {
                 for (x = 0; x < SIZE; x++) {
                     for (y = 0; y < SIZE; y++) {
                         if (grille[x][y] == bateau + 10) {
-                            grille[x][y] = bateau + 20;
+                            compteur++;
+                        }
+                    }
+                }
+                printf("%d\n", compteur);
+                if (compteur == bateau) {                //le bateau est coulé
+                    printf("Coule ! ! !\n");
+                    for (x = 0; x < SIZE; x++) {
+                        for (y = 0; y < SIZE; y++) {
+                            if (grille[x][y] == bateau + 10) {
+                                grille[x][y] = bateau + 20;
+
+                                bateaux_coules++;
+                                printf("\nBateaux coules : %d", bateaux_coules);
+
+                            }
                         }
                     }
                 }
@@ -140,8 +159,6 @@ void Playgame() {
         }
     }
 }
-
-
 
 int main() {
     int top;
